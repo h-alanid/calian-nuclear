@@ -1,0 +1,1066 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Calian Nuclear — The lifecycle, engineered</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --blue: #003B71;
+    --blue-deep: #002a52;
+    --blue-soft: #14507f;
+    --teal: #0574B9;
+    --teal-soft: #e1eef7;
+    --ink: #2E2E2E;
+    --ink-soft: #5a5e63;
+    --line: #e6e8ec;
+    --line-soft: #f2f4f6;
+    --paper: #ffffff;
+    --paper-warm: #fafbfc;
+    --grey-1: #67696c;
+    --grey-2: #a6abb1;
+    --tag-bg: var(--line-soft);
+    --arc-track: #e1e5ea;
+    --arc-track-outer: #cfd7df;
+    --node-bg: var(--paper);
+    --active-bg: #0574B9;
+    --active-fg: #ffffff;
+    --logo-filter: none;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  #root { min-height: 100vh; }
+
+  /* shared chrome ----------------------------- */
+  .stage {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 48px 64px 32px;
+  }
+  @media (max-width: 1100px) {
+    .stage { padding: 36px 32px 24px; }
+  }
+
+  /* header */
+  .topbar {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 32px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 24px;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 18px;
+  }
+  .brand-logo {
+    height: 34px;
+    width: auto;
+    display: block;
+    filter: var(--logo-filter, none);
+    transition: filter .3s;
+  }
+  .brand-divider {
+    width: 1px;
+    height: 30px;
+    background: var(--line);
+  }
+  .brand-bu {
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+  .brand-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--grey-1);
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .topbar-right {
+    text-align: right;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--grey-1);
+    line-height: 1.6;
+  }
+  .topbar-right .key { color: var(--grey-2); }
+
+  /* credentials — topbar variant (compact, right-aligned) */
+  .topbar-creds {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    align-items: flex-end;
+  }
+  .topbar-creds-row {
+    display: flex; gap: 10px; align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .topbar-creds .stamp {
+    font-size: 9px;
+    letter-spacing: 0.20em;
+    color: var(--grey-2);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .topbar-creds .badge {
+    font-size: 12px;
+    color: var(--blue);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .topbar-creds .midot {
+    width: 2.5px; height: 2.5px;
+    border-radius: 999px;
+    background: var(--grey-2);
+  }
+  .topbar-creds .blurb {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: 0;
+    font-weight: 400;
+    text-align: right;
+  }
+
+  /* credentials — rail variant (full-width strip between hero and viz) */
+  .creds-rail {
+    margin: 56px 0 0;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .creds-rail-cluster { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .creds-rail .stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.20em;
+    color: var(--grey-1);
+    text-transform: uppercase;
+    font-weight: 500;
+    display: inline-flex; align-items: center;
+  }
+  .creds-rail .stamp::before {
+    content: "";
+    display: inline-block;
+    width: 18px; height: 1px;
+    background: var(--teal);
+    margin-right: 12px;
+  }
+  .creds-rail .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue);
+    letter-spacing: 0.01em;
+  }
+  .creds-rail .midot { color: var(--grey-2); font-size: 11px; line-height: 1; }
+  .creds-rail .blurb {
+    font-size: 13.5px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* hero */
+  .hero {
+    padding: 56px 0 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    align-items: flex-start;
+  }
+  .hero h1 {
+    font-size: clamp(44px, 5.2vw, 76px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin: 0;
+    color: var(--blue);
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .hero h1 .dot {
+    color: var(--teal);
+  }
+  .hero p.sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 64ch;
+    margin: 0;
+    font-weight: 400;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .hero p.sub strong { color: var(--ink); font-weight: 600; }
+
+  /* topbar — contact links (replaces the old caption) */
+  .topbar-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+    font-size: 13px;
+  }
+  .topbar-contact a {
+    color: var(--blue);
+    text-decoration: none;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    border-bottom: 1px solid transparent;
+    transition: border-color .2s;
+  }
+  .topbar-contact a:hover { border-bottom-color: var(--teal); }
+  .topbar-contact a:nth-child(2) { font-size: 12px; color: var(--ink-soft); font-weight: 400; }
+
+  /* lifecycle ARC strip */
+  .arc-wrap {
+    position: relative;
+    margin: 0;
+    padding: 24px 0 0;
+  }
+  .arc-svg {
+    width: 100%;
+    height: 96px;
+    display: block;
+    overflow: visible;
+  }
+  .arc-nodes {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: -56px;
+    position: relative;
+    z-index: 2;
+  }
+  .node {
+    display: flex; flex-direction: column; align-items: center;
+    cursor: pointer;
+    padding: 0 8px;
+    user-select: none;
+    text-align: center;
+    position: relative;
+  }
+  .node-dot {
+    width: 56px; height: 56px;
+    border-radius: 999px;
+    background: var(--node-bg);
+    border: 1.5px solid var(--line);
+    display: grid; place-items: center;
+    transition: all .35s cubic-bezier(.2,.7,.2,1);
+    position: relative;
+    z-index: 1;
+  }
+  .node-dot::after {
+    content: ""; position: absolute; inset: -6px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    transition: all .35s;
+  }
+  .node-dot svg { width: 26px; height: 26px; color: var(--blue); transition: color .3s; }
+  .node-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--grey-2);
+    margin-top: 24px;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+  }
+  .node-label {
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    line-height: 1.25;
+    max-width: 16ch;
+    transition: color .3s;
+  }
+  .node:hover .node-dot {
+    border-color: var(--blue);
+  }
+  .node:hover .node-label { color: var(--ink); }
+
+  .node.active .node-dot {
+    background: var(--active-bg);
+    border-color: var(--active-bg);
+    transform: scale(1.18);
+  }
+  .node.active .node-dot svg { color: var(--active-fg); }
+  .node.active .node-dot::after {
+    border-color: var(--teal);
+    border-width: 1.5px;
+    inset: -10px;
+  }
+  .node.active .node-num { color: var(--teal); }
+  .node.active .node-label { color: var(--blue); }
+
+  /* progress indicator on arc */
+  .arc-progress-track,
+  .arc-progress-fill { transition: stroke-dashoffset 0.6s cubic-bezier(.6,.2,.2,1); }
+
+  /* DETAIL PANEL */
+  .panel-wrap {
+    margin-top: 40px;
+    border-top: 1px solid var(--line);
+    padding-top: 40px;
+    min-height: 460px;
+  }
+  .panel {
+    display: grid;
+    grid-template-columns: 320px 1fr 1fr;
+    gap: 48px;
+    animation: fadeIn 0.45s ease both;
+  }
+  @media (max-width: 1100px) {
+    .panel { grid-template-columns: 1fr; gap: 28px; }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .panel-meta { }
+  .panel-step {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 0.18em;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .panel-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin: 14px 0 18px;
+  }
+  .panel-lead {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .panel-tags {
+    margin-top: 24px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-soft);
+    background: var(--tag-bg);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 4px 8px;
+    letter-spacing: 0.02em;
+  }
+
+  /* outcomes column */
+  .col-head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+    margin: 0 0 18px;
+    font-weight: 500;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+  .outcome-list { display: flex; flex-direction: column; gap: 20px; }
+  .outcome {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  .outcome-marker {
+    margin-top: 8px;
+    width: 18px; height: 1.5px;
+    background: var(--teal);
+  }
+  .outcome-headline {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+    letter-spacing: -0.005em;
+  }
+  .outcome-body {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    line-height: 1.55;
+  }
+
+  /* proof column */
+  .proof-list { display: flex; flex-direction: column; gap: 14px; }
+  .proof {
+    border-left: 2px solid var(--blue);
+    padding: 4px 0 4px 16px;
+  }
+  .proof-where {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    color: var(--teal);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+  .proof-what {
+    font-size: 14.5px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  /* footer ------------------------------------ */
+  .footer {
+    margin-top: 24px;
+    padding: 28px 0 16px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .creds {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--grey-1);
+    letter-spacing: 0.04em;
+  }
+  .creds-sep { color: var(--line); }
+  .creds-line {
+    color: var(--ink-soft);
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+  }
+  .creds .badge {
+    color: var(--blue);
+    font-weight: 600;
+  }
+  .contact {
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex; gap: 18px; align-items: center;
+  }
+  .contact a {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .2s;
+  }
+  .contact a:hover { border-bottom-color: var(--teal); }
+
+  /* hint */
+  .hint {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--grey-2);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .hint kbd {
+    background: var(--line-soft);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-family: inherit;
+    color: var(--ink-soft);
+    margin: 0 2px;
+  }
+
+  /* arrow controls */
+  .nav-arrows {
+    position: absolute;
+    top: 8px; right: 0;
+    display: flex; gap: 6px;
+  }
+  .nav-btn {
+    width: 36px; height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    display: grid; place-items: center;
+    cursor: pointer;
+    color: var(--ink-soft);
+    transition: all .2s;
+  }
+  .nav-btn:hover {
+    color: var(--blue);
+    border-color: var(--blue);
+  }
+  .nav-btn:disabled {
+    opacity: 0.35; cursor: not-allowed;
+  }
+
+  .arc-position { position: relative; }
+
+  /* SHARED viz colors driven by CSS vars (SVG stroke property accepts var()) */
+  .arc-track-outer { stroke: var(--arc-track-outer); }
+  .arc-track-inner { stroke: var(--arc-track); }
+  .arc-progress    { stroke: var(--blue); }
+  .arc-tick        { fill: var(--teal); }
+
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" data-presets="env,react">
+
+
+
+
+const { useState, useEffect, useMemo, useRef } = React;
+
+/* ------------------------------------------------------------------ */
+/* ICONS — four sets the user can toggle between                     */
+/* ------------------------------------------------------------------ */
+const ARROWS = {
+  ArrowL: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>,
+  ArrowR: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+};
+
+const svgProps = { viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round', strokeLinejoin: 'round' };
+
+const ICON_SETS = {
+  // ---- SET A: System states ----------------------------------------
+  states: {
+    label: 'System states',
+    Siting: () =>
+    <svg {...svgProps}>
+        <path d="M 3 18 Q 12 11 21 18" />
+        <path d="M 5 14 Q 12 8 19 14" />
+        <path d="M 7 10 Q 12 6 17 10" />
+        <circle cx="12" cy="13" r="0.9" fill="currentColor" stroke="none" />
+      </svg>,
+
+    Construction: () =>
+    <svg {...svgProps} strokeWidth={1.6}>
+        <line x1="3" y1="20" x2="21" y2="20" />
+        <line x1="7" y1="20" x2="7" y2="14" />
+        <line x1="12" y1="20" x2="12" y2="9" />
+        <line x1="17" y1="20" x2="17" y2="4" />
+      </svg>,
+
+    Operations: () =>
+    <svg {...svgProps}>
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+      </svg>,
+
+    Refurb: () =>
+    <svg {...svgProps}>
+        <line x1="4" y1="9" x2="18" y2="9" />
+        <polyline points="15 6 18 9 15 12" />
+        <line x1="20" y1="15" x2="6" y2="15" />
+        <polyline points="9 12 6 15 9 18" />
+      </svg>,
+
+    Decommissioning: () =>
+    <svg {...svgProps}>
+        <rect x="6" y="3" width="12" height="18" rx="3" />
+        <line x1="6" y1="9" x2="18" y2="9" />
+        <line x1="6" y1="15" x2="18" y2="15" />
+      </svg>
+
+  },
+
+  // ---- SET B: Deliverables -----------------------------------------
+  docs: {
+    label: 'Deliverables',
+    Siting: () =>
+    <svg {...svgProps}>
+        <path d="M 6 3 H 15 L 19 7 V 21 H 6 Z" />
+        <path d="M 15 3 V 7 H 19" />
+        <polyline points="9 14 11 16 14 12" />
+      </svg>,
+
+    Construction: () =>
+    <svg {...svgProps}>
+        <rect x="3" y="4" width="18" height="16" rx="1" />
+        <line x1="3" y1="9" x2="21" y2="9" />
+        <line x1="9" y1="9" x2="9" y2="20" />
+        <line x1="13" y1="14" x2="18" y2="14" />
+        <line x1="13" y1="17" x2="17" y2="17" />
+      </svg>,
+
+    Operations: () =>
+    <svg {...svgProps}>
+        <path d="M 4 17 a 8 8 0 0 1 16 0" />
+        <line x1="12" y1="17" x2="16" y2="11" />
+        <circle cx="12" cy="17" r="1.2" fill="currentColor" stroke="none" />
+      </svg>,
+
+    Refurb: () =>
+    <svg {...svgProps}>
+        <rect x="5" y="3" width="14" height="18" rx="1" />
+        <line x1="8" y1="8" x2="16" y2="8" />
+        <path d="M 9 16 a 3 3 0 1 1 1 3" />
+        <polyline points="7 16 9 16 9 14" />
+      </svg>,
+
+    Decommissioning: () =>
+    <svg {...svgProps}>
+        <path d="M 3 7 a 1 1 0 0 1 1 -1 H 9 L 11 8 H 20 a 1 1 0 0 1 1 1 V 19 a 1 1 0 0 1 -1 1 H 4 a 1 1 0 0 1 -1 -1 Z" />
+        <line x1="3" y1="12" x2="21" y2="12" />
+      </svg>
+
+  },
+
+  // ---- SET C: Reactor silhouettes ----------------------------------
+  reactor: {
+    label: 'Reactor silhouettes',
+    Siting: () =>
+    <svg {...svgProps}>
+        <path d="M 5 19 V 13 a 7 7 0 0 1 14 0 V 19" strokeDasharray="2 2.5" />
+        <line x1="3" y1="19" x2="21" y2="19" />
+      </svg>,
+
+    Construction: () =>
+    <svg {...svgProps}>
+        <path d="M 5 19 V 13 a 7 7 0 0 1 14 0 V 19" />
+        <line x1="3" y1="19" x2="21" y2="19" />
+        <line x1="12" y1="9" x2="12" y2="3" />
+        <line x1="12" y1="3" x2="18" y2="3" />
+        <line x1="17" y1="3" x2="17" y2="6" />
+      </svg>,
+
+    Operations: () =>
+    <svg {...svgProps}>
+        <path d="M 5 19 V 13 a 7 7 0 0 1 14 0 V 19" />
+        <line x1="3" y1="19" x2="21" y2="19" />
+        <circle cx="12" cy="15" r="2" fill="currentColor" stroke="none" />
+      </svg>,
+
+    Refurb: () =>
+    <svg {...svgProps}>
+        <path d="M 5 19 V 13 a 7 7 0 0 1 14 0 V 19" />
+        <line x1="3" y1="19" x2="21" y2="19" />
+        <path d="M 9 16 a 3 3 0 1 1 4.5 -2.5" />
+        <polyline points="11.5 11 14 12 13 14.5" />
+      </svg>,
+
+    Decommissioning: () =>
+    <svg {...svgProps}>
+        <path d="M 5 19 V 13 a 7 7 0 0 1 14 0 V 19" />
+        <line x1="3" y1="19" x2="21" y2="19" />
+        <line x1="9" y1="13" x2="15" y2="18" />
+        <line x1="15" y1="13" x2="9" y2="18" />
+      </svg>
+
+  },
+
+  // ---- ORIGINAL: the very first set -------------------------------
+  origin: {
+    label: 'Original',
+    Siting: () =>
+    <svg {...svgProps}>
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="3.5" />
+        <line x1="12" y1="2" x2="12" y2="6" />
+        <line x1="12" y1="18" x2="12" y2="22" />
+        <line x1="2" y1="12" x2="6" y2="12" />
+        <line x1="18" y1="12" x2="22" y2="12" />
+      </svg>,
+
+    Construction: () =>
+    <svg {...svgProps}>
+        <line x1="4" y1="20" x2="20" y2="20" />
+        <line x1="7" y1="20" x2="7" y2="8" />
+        <line x1="12" y1="20" x2="12" y2="4" />
+        <line x1="17" y1="20" x2="17" y2="11" />
+        <line x1="7" y1="8" x2="17" y2="11" />
+        <line x1="7" y1="8" x2="12" y2="4" />
+      </svg>,
+
+    Operations: () =>
+    <svg {...svgProps}>
+        <circle cx="12" cy="12" r="2" />
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" />
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(60 12 12)" />
+        <ellipse cx="12" cy="12" rx="9" ry="3.5" transform="rotate(120 12 12)" />
+      </svg>,
+
+    Refurb: () =>
+    <svg {...svgProps}>
+        <path d="M 20 12 a 8 8 0 1 0 -2.5 5.8" />
+        <polyline points="20 6 20 12 14 12" />
+      </svg>,
+
+    Decommissioning: () =>
+    <svg {...svgProps}>
+        <rect x="4" y="10" width="16" height="11" rx="1" />
+        <path d="M 7 10 V 7 a 5 5 0 0 1 10 0 V 10" />
+        <line x1="12" y1="14" x2="12" y2="17" />
+      </svg>
+
+  }
+};
+
+/* ------------------------------------------------------------------ */
+/* PHASE DATA                                                          */
+/* ------------------------------------------------------------------ */
+const PHASES = [
+{
+  id: 'siting',
+  num: '01',
+  label: 'Siting, Licensing\n& Impact Assessment',
+  short: 'Siting & Licensing',
+  icon: 'Siting',
+  lead: 'The starting point for every new nuclear project. Calian helps proponents navigate the regulatory and environmental landscape before construction begins.',
+  tags: ['CNSC framework', 'IAAC', 'PSA', 'DSA', 'PDP', 'IMS'],
+  outcomes: [
+  {
+    h: 'A regulatory pathway de-risked from day one',
+    b: 'CNSC- and IAAC-aligned licensing strategy, technology selection, and a defensible feasibility case before capital is committed.'
+  },
+  {
+    h: 'A safety story written before the first shovel',
+    b: 'Probabilistic and deterministic safety analysis, hazard screening, and independent peer review on pre-operational safety reports.'
+  },
+  {
+    h: 'Communities at the table, not on the sidelines',
+    b: 'Indigenous and public engagement programs — facilitation, virtual tools, surveying — built to withstand scrutiny.'
+  }],
+
+  proofs: [
+  { where: 'Ontario · Saskatchewan · New Brunswick', what: 'Impact assessments and long-term performance studies supporting new-build programs in three provinces.' },
+  { where: 'National program', what: 'Safety case for Canada\u2019s deep geological repository.' },
+  { where: 'First-time entrant', what: 'Nuclear-compliant Integrated Management System for a utility pursuing its first reactor.' }]
+
+},
+{
+  id: 'construction',
+  num: '02',
+  label: 'Construction\n& Commissioning',
+  short: 'Construction',
+  icon: 'Construction',
+  lead: 'Structured project delivery across scope, schedule, cost, and risk. Built around the realities of multi-unit, multi-billion-dollar nuclear programs.',
+  tags: ['Primavera P6', 'OPC', 'CSA N286', 'ISO 9001', 'N299.1'],
+  outcomes: [
+  {
+    h: 'Schedules that hold under regulator and board scrutiny',
+    b: 'Integrated 10,000-plus-activity schedules in Primavera P6 / OPC, owned end-to-end with the controls to defend them.'
+  },
+  {
+    h: 'Vendors aligned, milestones owned',
+    b: 'Conceptual and preliminary engineering design coupled with vendor coordination, so commitments translate into deliveries.'
+  },
+  {
+    h: 'Quality embedded, not bolted on',
+    b: 'CSA N286, ISO 9001 and N299.1 compliance baked into the program from kickoff, not retrofitted at audit.'
+  }],
+
+  proofs: [
+  { where: 'Commissioning programs', what: 'Multi-unit tool lifecycle and logistics planning across the campaign.' },
+  { where: 'Multi-billion-dollar nuclear builds', what: 'Enterprise-scale scheduling for some of Canada\u2019s largest nuclear capital projects.' }]
+
+},
+{
+  id: 'operations',
+  num: '03',
+  label: 'Operations',
+  short: 'Operations',
+  icon: 'Operations',
+  lead: 'Keeping operating stations safe, compliant, and license-ready, through regulatory cycles and the events crews hope never come.',
+  tags: ['ALARA', 'PSA refresh', 'ResponseReady', 'Robotics', 'R&D Lab'],
+  outcomes: [
+  {
+    h: 'License-ready through every cycle',
+    b: 'PSA updates, hazard screening refreshes, safety report updates, systems & design engineering, and regulatory correspondence handled at the cadence the CNSC expects.'
+  },
+  {
+    h: 'Dose stays low, monitoring stays defensible',
+    b: 'ALARA programs, dosimetry, health physics, derived release limits, effluent monitoring and action-level management.'
+  },
+  {
+    h: 'Crews trained for the day that may never come',
+    b: 'Emergency preparedness, training, and our ResponseReady platform. Paired with mobile robotics for high-dose mapping and response.'
+  }],
+
+  proofs: [
+  { where: 'National interoperability', what: 'Design and delivery of Canada\u2019s largest nuclear interoperability exercises.' },
+  { where: 'Multi-site fleet', what: 'Annual public dose calculations across multiple Canadian reactor sites.' },
+  { where: 'CANDU fleet', what: 'Automated reactor scrape-sample retrieval (preliminary design phase) and dexterous robotics for radiation work.' }]
+
+},
+{
+  id: 'refurb',
+  num: '04',
+  label: 'Refurbishment\n& Life Extension',
+  short: 'Refurbishment',
+  icon: 'Refurb',
+  lead: 'Supporting safety analysis, tooling systems engineering and construction logistics to minimize risk and keep refurbishment campaigns on-time and on-budget.',
+  tags: ['Outage', 'Retube', 'DVT', 'Storyboards'],
+  outcomes: [
+  {
+    h: 'Tooling validated before it reaches the reactor face',
+    b: 'Planning and oversight of tooling design engineering, with Design Verification Testing leadership across complex tool programs.'
+  },
+  {
+    h: 'Outage configurations carry their own safety case',
+    b: 'Safety assessments for unique refurbishment configurations and outage phases.'
+  },
+  {
+    h: 'Logistics that survive the storyboard and the schedule',
+    b: 'Project Engineering and Construction Logistics planning, communicated through case-specific "Storyboards" your crews can actually work from.'
+  }],
+
+  proofs: [
+  { where: 'Ontario refurbishment', what: 'Retube tooling verification programs across major refurbishment campaigns.' },
+  { where: 'Multi-unit stations', what: 'Refurbishment safety assessments supporting concurrent unit work.' },
+  { where: 'Life extension', what: 'Hazard screening updates underpinning life-extension license applications.' }]
+
+},
+{
+  id: 'decom',
+  num: '05',
+  label: 'Decommissioning\n& Waste Management',
+  short: 'Decommissioning',
+  icon: 'Decommissioning',
+  lead: 'Safe closure and responsible stewardship — for the stations entering shutdown and the repositories that will outlast all of us.',
+  tags: ['DGR', 'Clearance', 'Safe storage', 'Post-closure'],
+  outcomes: [
+  {
+    h: 'Plans the regulator accepts the first time',
+    b: 'Detailed decommissioning plans, site characterization, and waste characterization built around CNSC expectations.'
+  },
+  {
+    h: 'Sites released with defensible clearance evidence',
+    b: 'Clearance surveys and development of conditional clearance levels, so material and land come out from under regulatory control on solid ground.'
+  },
+  {
+    h: 'Closure cases written for post-closure scrutiny',
+    b: 'Pre-closure and post-closure safety assessments, plus hazard-specific incident response planning and training for decommissioning and waste projects.'
+  }],
+
+  proofs: [
+  { where: 'Deep geological repository', what: 'Safety assessment and hazard classification for Canada\u2019s DGR program.' },
+  { where: 'Ontario fleet', what: 'Safe-storage safety analysis for stations entering decommissioning.' },
+  { where: 'Post-shutdown transition', what: 'Restructuring radiation protection programs for stations after final shutdown.' }]
+
+}];
+
+
+/* ------------------------------------------------------------------ */
+/* SPINE strip — a straight line connecting the 5 nodes               */
+/* ------------------------------------------------------------------ */
+function SpineStrip({ activeIdx, count }) {
+  const W = 1200,H = 90;
+  const ptAt = (t) => ({ x: t * W, y: 64 });
+
+  const path = (samples = 60) => {
+    let d = '';
+    for (let i = 0; i <= samples; i++) {
+      const p = ptAt(i / samples);
+      d += (i === 0 ? 'M ' : 'L ') + p.x.toFixed(2) + ' ' + p.y.toFixed(2) + ' ';
+    }
+    return d;
+  };
+  const pathD = useMemo(() => path(2), []);
+
+  const nodeTs = Array.from({ length: count }, (_, i) => (i + 0.5) / count);
+  const activeT = nodeTs[activeIdx];
+
+  const pathRef = useRef(null);
+  const [len, setLen] = useState(1000);
+  useEffect(() => {
+    if (pathRef.current) setLen(pathRef.current.getTotalLength());
+  }, [pathD]);
+
+  const tickPt = ptAt(activeT);
+
+  return (
+    <svg className="arc-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+      <path ref={pathRef} className="arc-track-inner" d={pathD} fill="none" strokeWidth="2" strokeLinecap="round" />
+      <path
+        className="arc-progress"
+        d={pathD}
+        fill="none"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeDasharray={len}
+        strokeDashoffset={len * (1 - activeT)}
+        style={{ transition: 'stroke-dashoffset 0.7s cubic-bezier(.5,.1,.2,1)' }} />
+      <circle className="arc-tick" cx={tickPt.x} cy={tickPt.y} r="3.5" />
+    </svg>);
+
+}
+
+/* ------------------------------------------------------------------ */
+/* APP                                                                  */
+/* ------------------------------------------------------------------ */
+function App() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const phase = PHASES[activeIdx];
+
+  const Icon = { ...ICON_SETS.states, ...ARROWS };
+
+  return (
+    <div
+      className="stage">
+      
+      {/* ---------- TOP BAR ---------- */}
+      <div className="topbar">
+        <div className="brand">
+          <img className="brand-logo" src="data:image/png;base64,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" alt="Calian" />
+          <div className="brand-divider" />
+          <div>
+            <div className="brand-bu">Nuclear &amp; Environmental Services</div>
+            <div className="brand-tag">Confidence. Engineered.</div>
+          </div>
+        </div>
+        <div className="topbar-right">
+          <div className="topbar-contact">
+            <a href="mailto:nuclear@calian.com">nuclear@calian.com</a>
+          </div>
+        </div>
+      </div>
+
+      {/* ---------- HERO ---------- */}
+      <div className="hero">
+        <h1>
+          Supporting Canada’s nuclear fleet: from first license through final decommissioning<span className="dot">.</span>
+        </h1>
+        <p className="sub">
+          Five phases. One operating partner. <strong>Calian</strong> works alongside utilities, vendors, regulators and government bodies across the full lifecycle of a nuclear facility, with over 25 years of work that has stood up to scrutiny.
+        </p>
+      </div>
+
+      {/* ---------- VIZ + PANEL ---------- */}
+      <div className="viz-wrap">
+        {/* ---------- LIFECYCLE strip ---------- */}
+        <div className="arc-wrap arc-position" data-screen-label="Lifecycle">
+          <div className="nav-arrows">
+            <button className="nav-btn" aria-label="Previous phase" onClick={() => setActiveIdx((i) => Math.max(0, i - 1))} disabled={activeIdx === 0}><Icon.ArrowL /></button>
+            <button className="nav-btn" aria-label="Next phase" onClick={() => setActiveIdx((i) => Math.min(PHASES.length - 1, i + 1))} disabled={activeIdx === PHASES.length - 1}><Icon.ArrowR /></button>
+          </div>
+
+          <SpineStrip activeIdx={activeIdx} count={PHASES.length} />
+          <div className="arc-nodes" role="tablist">
+            {PHASES.map((p, i) => {
+              const Cmp = Icon[p.icon];
+              const active = i === activeIdx;
+              return (
+                <div
+                  key={p.id}
+                  className={'node' + (active ? ' active' : '')}
+                  onClick={() => setActiveIdx(i)}
+                  role="tab"
+                  aria-selected={active}
+                  tabIndex={0}
+                  onKeyDown={(e) => {if (e.key === 'Enter' || e.key === ' ') setActiveIdx(i);}}>
+                  <div className="node-dot"><Cmp /></div>
+                  <div className="node-num">PHASE {p.num}</div>
+                  <div className="node-label">{p.label.split('\n').map((l, idx) => <div key={idx}>{l}</div>)}</div>
+                </div>);
+
+            })}
+          </div>
+
+          <div className="hint" style={{ marginTop: 24 }}>
+            select a phase to expand
+          </div>
+        </div>
+
+        {/* ---------- DETAIL PANEL ---------- */}
+        <div className="panel-wrap">
+          <div className="panel" key={phase.id} data-screen-label={`Phase ${phase.num}`}>
+            <div className="panel-meta">
+              <div className="panel-step">PHASE {phase.num} &nbsp;/&nbsp; {PHASES.length.toString().padStart(2, '0')}</div>
+              <h2 className="panel-title">{phase.label.replace('\n', ' ')}</h2>
+              <p className="panel-lead">{phase.lead}</p>
+              <div className="panel-tags">
+                {phase.tags.map((tg) => <span className="tag" key={tg}>{tg}</span>)}
+              </div>
+            </div>
+
+            <div className="col-outcomes">
+              <h3 className="col-head">What our clients achieve</h3>
+              <div className="outcome-list">
+                {phase.outcomes.map((o, i) =>
+                <div className="outcome" key={i}>
+                    <div className="outcome-marker" />
+                    <div>
+                      <div className="outcome-headline">{o.h}</div>
+                      <div className="outcome-body">{o.b}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="col-proof">
+              <h3 className="col-head">Selected proof points</h3>
+              <div className="proof-list">
+                {phase.proofs.map((pp, i) =>
+                <div className="proof" key={i}>
+                    <div className="proof-where">{pp.where}</div>
+                    <div className="proof-what">{pp.what}</div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---------- CREDENTIALS RAIL (bookends the page) ---------- */}
+      <div className="creds-rail">
+        <div className="creds-rail-cluster">
+          <span className="stamp">
+</span>
+          <span className="badge">ISO 9001</span>
+          <span className="midot">•</span>
+          <span className="badge">CSA N286</span>
+          <span className="midot">•</span>
+          <span className="badge">CSA N299.1</span>
+        </div>
+        <div className="creds-rail-cluster">
+          <span className="stamp">Approved vendor</span>
+          <span className="blurb">for all major Canadian nuclear utilities</span>
+        </div>
+      </div>
+    </div>);
+
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
