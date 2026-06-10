@@ -140,9 +140,8 @@
 
   /* credentials — rail variant (full-width strip between hero and viz) */
   .creds-rail {
-    margin: 56px 0 0;
+    margin: 0;
     padding: 22px 0;
-    border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     display: flex;
     align-items: center;
@@ -544,6 +543,8 @@
 
 
 
+
+
 const { useState, useEffect, useMemo, useRef } = React;
 
 /* ------------------------------------------------------------------ */
@@ -755,7 +756,7 @@ const PHASES = [
   },
   {
     h: 'Communities at the table, not on the sidelines',
-    b: 'Indigenous and public engagement programs — facilitation, virtual tools, surveying — built to withstand scrutiny.'
+    b: 'Indigenous and public engagement programs. Facilitation, virtual tools, and surveys built to withstand scrutiny.'
   }],
 
   proofs: [
@@ -797,7 +798,7 @@ const PHASES = [
   label: 'Operations',
   short: 'Operations',
   icon: 'Operations',
-  lead: 'Keeping operating stations safe, compliant, and license-ready, through regulatory cycles and the events crews hope never come.',
+  lead: 'Keeping operating stations safe, compliant, and licence-ready, through regulatory cycles and the events crews hope never come.',
   tags: ['ALARA', 'PSA refresh', 'ResponseReady', 'Robotics', 'R&D Lab'],
   outcomes: [
   {
@@ -858,21 +859,21 @@ const PHASES = [
   outcomes: [
   {
     h: 'Plans the regulator accepts the first time',
-    b: 'Detailed decommissioning plans, site characterization, and waste characterization built around CNSC expectations.'
+    b: 'Detailed decommissioning plans, site characterization, and waste characterization built around CNSC expectations'
   },
   {
-    h: 'Sites released with defensible clearance evidence',
-    b: 'Clearance surveys and development of conditional clearance levels, so material and land come out from under regulatory control on solid ground.'
+    h: 'Sites and equipment released with defensible evidence',
+    b: 'Clearance surveys and development of conditional clearance levels, so material and land come out from under regulatory control on solid ground'
   },
   {
     h: 'Closure cases written for post-closure scrutiny',
-    b: 'Pre-closure and post-closure safety assessments, plus hazard-specific incident response planning and training for decommissioning and waste projects.'
+    b: 'Pre-closure and post-closure safety assessments, plus hazard-specific incident response planning and training for decommissioning and waste projects'
   }],
 
   proofs: [
-  { where: 'Deep geological repository', what: 'Safety assessment and hazard classification for Canada\u2019s DGR program.' },
-  { where: 'Ontario fleet', what: 'Safe-storage safety analysis for stations entering decommissioning.' },
-  { where: 'Post-shutdown transition', what: 'Restructuring radiation protection programs for stations after final shutdown.' }]
+  { where: 'Waste disposal facility', what: 'Safety assessment and hazard screening for waste disposal facilities for LLW and HLW ' },
+  { where: 'Ontario fleet', what: 'Safe-storage safety analysis for stations entering decommissioning' },
+  { where: 'Post-shutdown transition', what: 'Characterization surveys in support of decommissioning and demolition activities' }]
 
 }];
 
@@ -952,10 +953,27 @@ function App() {
         </div>
       </div>
 
+      {/* ---------- CREDENTIALS RAIL (directly under header) ---------- */}
+      <div className="creds-rail">
+        <div className="creds-rail-cluster">
+          <span className="stamp">
+</span>
+          <span className="badge">ISO 9001</span>
+          <span className="midot">•</span>
+          <span className="badge">CSA N286</span>
+          <span className="midot">•</span>
+          <span className="badge">CSA N299.1</span>
+        </div>
+        <div className="creds-rail-cluster">
+          <span className="stamp">Approved vendor</span>
+          <span className="blurb">for all Canadian nuclear utilities</span>
+        </div>
+      </div>
+
       {/* ---------- HERO ---------- */}
       <div className="hero">
         <h1>
-          Supporting Canada’s nuclear fleet: from first license through final decommissioning<span className="dot">.</span>
+          Supporting Canada’s nuclear fleet: from first licence through final decommissioning<span className="dot">.</span>
         </h1>
         <p className="sub">
           Five phases. One operating partner. <strong>Calian</strong> works alongside utilities, vendors, regulators and government bodies across the full lifecycle of a nuclear facility, with over 25 years of work that has stood up to scrutiny.
@@ -1039,28 +1057,13 @@ function App() {
           </div>
         </div>
       </div>
-
-      {/* ---------- CREDENTIALS RAIL (bookends the page) ---------- */}
-      <div className="creds-rail">
-        <div className="creds-rail-cluster">
-          <span className="stamp">
-</span>
-          <span className="badge">ISO 9001</span>
-          <span className="midot">•</span>
-          <span className="badge">CSA N286</span>
-          <span className="midot">•</span>
-          <span className="badge">CSA N299.1</span>
-        </div>
-        <div className="creds-rail-cluster">
-          <span className="stamp">Approved vendor</span>
-          <span className="blurb">for all major Canadian nuclear utilities</span>
-        </div>
-      </div>
     </div>);
 
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+
+
 </script>
 </body>
 </html>
